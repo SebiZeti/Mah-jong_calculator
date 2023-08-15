@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="assets/tiles.js"></script>
+        <script src="assets/mah_jong.js"></script>
+        <link rel="stylesheet" href="assets/style.css">
+    </head>
+
+    <body>
+        <main x-data="{
+            init: init,
+            tiles: '',
+            name1: '',
+            name2: '',
+            name3: '',
+            name4: '',
+            names: undefined,
+            tiles: undefined,
+            selected: [0,0,0,0],
+            started: false,
+        }" x-cloak>
+
+            <div x-show="!started">
+                <input type="text" x-model="name1" placeholder="1. játékos">
+                <input type="text" x-model="name2" placeholder="2. játékos">
+                <input type="text" x-model="name3" placeholder="3. játékos">
+                <input type="text" x-model="name4" placeholder="4. játékos">
+                <button @click="started = true, pushAlpine()">Start</button>
+            </div>
+
+            <div x-show="started">
+                <ul class="points">
+                    <template x-for="name in names">
+                        <div>
+                            <li class="header" :id="'ply'.concat(names.indexOf(name))" @click="select(`${names.indexOf(name)}`)" x-text="name"></li>
+                            <!--1,7 * 2,5 -> 85 * 125-->
+                            <svg width="255px" height="625px" align="center" id="table">
+                                <polygon points="0,0 255,0 255,500 170,500 170,625 0,625" style="fill:brown;stroke:black;stroke-width:2px" />
+                            </svg>
+                        </div>
+                    </template>
+                    <li>
+                        <template x-for="tile in tiles">
+                            <img :src="'assets/images/'+ tile[0] + tile[1] + '.png'" class="tile" :title="tile[2]" :id="tile[0] + tile[1]" @click="addTile(`${tile[0] + tile[1]}`)">
+                        </template>
+                    </li>
+                </ul>
+                <!-- First top 65 left 48-->
+                <div id="images">
+                </div>
+                <button @click="sendTable()">Sajt</button>
+            </div>
+
+        </main>
+    </body>
+</html>
