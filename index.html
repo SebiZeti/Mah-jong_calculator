@@ -37,7 +37,7 @@
                         <div>
                             <li class="header" :id="'ply'.concat(names.indexOf(name))" @click="select(`${names.indexOf(name)}`)" x-text="name"></li>
                             <!--1,7 * 2,5 -> 85 * 125-->
-                            <svg width="255px" height="625px" align="center" id="table">
+                            <svg width="255px" height="625px" align="center" :id="'table'.concat(names.indexOf(name))">
                                 <polygon points="0,0 255,0 255,500 170,500 170,625 0,625" style="fill:brown;stroke:black;stroke-width:2px" />
                             </svg>
                         </div>

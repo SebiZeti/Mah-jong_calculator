@@ -80,6 +80,7 @@ function addImgToTable(tile, ply, x, y, rot = false){
 //Gets the top and left edges of the table
 function getTableCords(id){
     var table = document.getElementById("table" + id);
+    console.log(table);
     var bound = table.getBoundingClientRect();
     return [bound.left, bound.top];
 }
