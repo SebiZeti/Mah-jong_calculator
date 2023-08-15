@@ -1,5 +1,5 @@
 let selected = undefined; //indexed from 0
-let added_tiles = [[[], [], [], [], [], []], [[], [], [], [], [], []], [[], [], [], [], [], []], [[], [], [], [], [], []]]; // first list for flowers, 3, 3, 3, 3, 2
+let added_tiles = [[[], [], [], [], [], []], [[], [], [], [], [], []], [[], [], [], [], [], []], [[], [], [], [], [], []]]; // 3, 3, 3, 3, 2, last list for flowers,
 let suits = ["b", "c", "r"]; //bamboo, character, round(circle)
 data = undefined
 
@@ -32,23 +32,23 @@ function addTile(ident){
     console.log(ident);
     if(selected != undefined){
         if(ident.charAt(0) == "f"){
-            added_tiles[selected][0].push(ident);
+            added_tiles[selected][5].push(ident);
         }
         else{
-            for(let i = 1; i < 6; i++){
+            for(let i = 0; i < 5; i++){
                 if(added_tiles[selected][i].length < 3 && i != 5){
                     added_tiles[selected][i].push(ident);
-                    addImgToTable(ident, selected, added_tiles[selected][i].length - 1, i - 1);
+                    addImgToTable(ident, selected, added_tiles[selected][i].length - 1, i);
                     break;
                 }
                 else if(added_tiles[selected][i][0] == added_tiles[selected][i][1] && added_tiles[selected][i][0] == added_tiles[selected][i][2] && added_tiles[selected][i][0] == ident && added_tiles[selected][i].length < 4 && i != 5){
                     added_tiles[selected][i].push(ident);
-                    addImgToTable(ident, selected, 1, i - 1, true)
+                    addImgToTable(ident, selected, 1, i, true)
                     break;
                 }
                 else if(added_tiles[selected][i].length < 2 && i == 5){
                     added_tiles[selected][i].push(ident);
-                    addImgToTable(ident, selected, added_tiles[selected][i].length - 1, i - 1);
+                    addImgToTable(ident, selected, added_tiles[selected][i].length - 1, i);
                     break;
                 }
             }
@@ -74,22 +74,21 @@ function addImgToTable(tile, ply, x, y, rot = false){
         img.setAttribute("x-on:click", "removeImg(" + ply + "," + 3 + "," + y + ")")
     }
     div.appendChild(img);
-    console.log(tile);
 }
 
 //Gets the top and left edges of the table
 function getTableCords(id){
     var table = document.getElementById("table" + id);
-    console.log(table);
     var bound = table.getBoundingClientRect();
     return [bound.left, bound.top];
 }
 
 //Removes tile from given player at given x,y cords
 function removeImg(ply, x, y){
+    console.log(x + " " +y)
     img = document.getElementById("tableimg_" + ply + "_" + x + "_" + y);
     div = document.getElementById("images");
     div.removeChild(img);
-    delete added_tiles[ply][y][x];
+    added_tiles[ply][y].splice(x,1);
     console.log(added_tiles);
 }
