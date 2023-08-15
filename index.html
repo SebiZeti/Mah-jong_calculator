@@ -21,7 +21,7 @@
             tiles: undefined,
             selected: [0,0,0,0],
             started: false,
-        }" x-cloak>
+        }" x-cloak x-init="$watch('started', startGame)">
 
             <div x-show="!started">
                 <input type="text" x-model="name1" placeholder="1. játékos">
@@ -34,24 +34,36 @@
             <div x-show="started">
                 <ul class="points">
                     <template x-for="name in names">
-                        <div>
+                        <div class="player">
                             <li class="header" :id="'ply'.concat(names.indexOf(name))" @click="select(`${names.indexOf(name)}`)" x-text="name"></li>
                             <!--1,7 * 2,5 -> 85 * 125-->
                             <svg width="255px" height="625px" align="center" :id="'table'.concat(names.indexOf(name))">
                                 <polygon points="0,0 255,0 255,500 170,500 170,625 0,625" style="fill:brown;stroke:black;stroke-width:2px" />
                             </svg>
+
+                            <table cellspacing="0" :id="'images'.concat(names.indexOf(name))">
+                                <tr><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <!-- Flowers -->
+                                <tr class="flowerRow"><td></td><td></td><td></td></tr>
+                                <tr class="flowerRow"><td></td><td></td><td></td></tr>
+                                <tr class="flowerRow"><td></td><td></td></tr>
+                            </table>
                         </div>
                     </template>
-                    <li>
+                    <li id="tileList">
                         <template x-for="tile in tiles">
-                            <img :src="'assets/images/'+ tile[0] + tile[1] + '.png'" class="tile" :title="tile[2]" :id="tile[0] + tile[1]" @click="addTile(`${tile[0] + tile[1]}`)">
+                            <img
+                                :src="'assets/images/'+ tile[0] + tile[1] + '.png'"
+                                class="tile" :title="tile[2]" :id="tile[0] + tile[1]"
+                                @click="addTile(`${tile[0] + tile[1]}`)" draggable="true"
+                                :data-tile="`${tile[0] + tile[1]}`">
                         </template>
                     </li>
                 </ul>
-                <!-- First top 65 left 48-->
-                <div id="images">
-                </div>
-                <button @click="sendTable()">Sajt</button>
             </div>
 
         </main>

@@ -42,7 +42,32 @@ li {
 }
 
 .table_tile{
-    position: absolute;
     height: 125px;
     width: 85px;
+}
+
+svg{
+    position: absolute;    
+}
+
+table{
+    position: absolute;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 255px;
+}
+
+td{
+    height: 125px;
+    width: 85px;
+    padding: 0px;
+}
+
+.hovered{
+    background: #c0860a;
+}
+
+tr{
+    padding: 0px;
 }
